@@ -10,19 +10,11 @@ if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
 }
 
 # Check if PSReadLine is installed
-if (-not (Get-Module -ListAvailable -Name PSReadLine)) {
+if (-not (Get-Module -ListAvailable -Name GuiCompletion )) {
     Write-Host GuiCompletion is not installed. Installing PSReadLine..."
-    choco install GuiCompletion -y
+    Install-Module -Name GuiCompletion -Scope CurrentUser
 } else {
     Write-Host GuiCompletion is already installed."
-}
-
-# Check if PSReadLine is installed
-if (-not (Get-Module -ListAvailable -Name PSReadLine)) {
-    Write-Host "PSReadLine is not installed. Installing PSReadLine..."
-    choco install psreadline -y
-} else {
-    Write-Host "PSReadLine is already installed."
 }
 
 # Check if Starship is installed
@@ -35,9 +27,6 @@ if (-not (Get-Command starship -ErrorAction SilentlyContinue)) {
 
 # Load Starship prompt
 Invoke-Expression (&starship init powershell)
-
-# Additional profile customizations
-Import-Module PSReadLine
 
 Install-GuiCompletion -Key Tab
 
