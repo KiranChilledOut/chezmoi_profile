@@ -105,7 +105,8 @@ Write-Host "`n=== Sync Complete ===" -ForegroundColor Cyan
 
 # Notify user if files changed
 if ($filesChanged) {
-    Write-Host "`n⚠  Profile files were updated!" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "⚠  Profile files were updated!" -ForegroundColor Yellow
     Write-Host "   Please reload your profile to apply changes:" -ForegroundColor White
     Write-Host "   . `$PROFILE" -ForegroundColor Cyan
     Write-Host ""
