@@ -18,7 +18,7 @@ Write-Host "Detected profile location: $profileDir" -ForegroundColor White
 # Create profile directory if it doesn't exist
 if (-not (Test-Path $profileDir)) {
     New-Item -ItemType Directory -Path $profileDir -Force | Out-Null
-    Write-Host "✓ Created profile directory" -ForegroundColor Green
+    Write-Host "[OK] Created profile directory" -ForegroundColor Green
 }
 
 # Track if any files were changed
@@ -56,10 +56,10 @@ foreach ($profileFile in $profileFiles) {
         if ($needsUpdate) {
             Copy-Item -Path $sourcePath -Destination $destPath -Force
             $filesChanged = $true
-            Write-Host "  ✓ Synced: $profileFile" -ForegroundColor Green
+            Write-Host "  [OK] Synced: $profileFile" -ForegroundColor Green
         }
         else {
-            Write-Host "  ✓ Up-to-date: $profileFile" -ForegroundColor Gray
+            Write-Host "  [OK] Up-to-date: $profileFile" -ForegroundColor Gray
         }
     }
 }
@@ -94,10 +94,10 @@ if (Test-Path $starship_source) {
     if ($needsUpdate) {
         Copy-Item -Path $starship_source -Destination $starship_dest -Force
         $filesChanged = $true
-        Write-Host "  ✓ Synced: starship.toml" -ForegroundColor Green
+        Write-Host "  [OK] Synced: starship.toml" -ForegroundColor Green
     }
     else {
-        Write-Host "  ✓ Up-to-date: starship.toml" -ForegroundColor Gray
+        Write-Host "  [OK] Up-to-date: starship.toml" -ForegroundColor Gray
     }
 }
 
@@ -106,12 +106,11 @@ Write-Host "`n=== Sync Complete ===" -ForegroundColor Cyan
 # Notify user if files changed
 if ($filesChanged) {
     Write-Host ""
-    Write-Host "⚠  Profile files were updated!" -ForegroundColor Yellow
-    Write-Host "   Please reload your profile to apply changes:" -ForegroundColor White
-    Write-Host "   . `$PROFILE" -ForegroundColor Cyan
+    Write-Host "[!] Profile files were updated!" -ForegroundColor Yellow
+    Write-Host "    Please reload your profile to apply changes:" -ForegroundColor White
+    Write-Host "    . `$PROFILE" -ForegroundColor Cyan
     Write-Host ""
-}
-else {
+} else {
     Write-Host "All files are up-to-date. No reload needed." -ForegroundColor Green
     Write-Host ""
 }
