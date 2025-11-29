@@ -1,4 +1,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
+
+# Choose your color palette: flexoki_dark (current), catppuccin_mocha, tokyo_night, gruvbox_dark, nord, or dracula
 palette = "flexoki_dark"
 
 # Using ANSI colors
@@ -78,19 +80,20 @@ aliases = { "corpuser034g" = "matchai" }
 
 [shell]
 disabled = false
-powershell_indicator = 'ps '
-pwsh_indicator = 'pscore> '
-bash_indicator = ''
-zsh_indicator = '%_' 
+powershell_indicator = 'pwsh '
+fish_indicator = 'fish '
+bash_indicator = 'bash '
+zsh_indicator = 'zsh ' 
 cmd_indicator = 'cmd '
-unknown_indicator = 'unkshell '
+nu_indicator = 'nu '
+unknown_indicator = 'shell '
 style = 'cyan bold'
 format = '[$indicator]($style)'
 
 [hostname]
 ssh_only = false
 format = '[$ssh_symbol](bold blue) on [$hostname](bold red) '
-ssh_symbol = " "
+ssh_symbol = " "
 
 [battery]
 full_symbol = "🔋"
@@ -101,7 +104,7 @@ discharging_symbol = "⚡"
 style = "bold red"
 
 [aws]
-symbol = "  "
+symbol = "  "
 format = "[$symbol($version )]($style)"
 
 [docker_context]
@@ -119,7 +122,7 @@ symbol = "󰆥 "
 format = "[$symbol($version )]($style)"
 
 [nodejs]
-symbol = " "
+symbol = " "
 format = "[$symbol($version )]($style)"
 
 # This is the default symbols table.
@@ -169,7 +172,7 @@ SUSE = "🦎 "
 Ubuntu = "🎯 "
 Ultramarine = "🔷 "
 Unknown = "❓ "
-Void = "  "
+Void = "  "
 Windows = "🏁 "
 
 [package]
@@ -199,3 +202,101 @@ bright-purple = "#8b7ec8"
 bright-cyan = "#3aa99f"
 bright-white = "#fffcf0"
 
+# ============================================================================
+# BONUS: Additional Color Palettes - Change 'palette =' at top to try them!
+# ============================================================================
+
+[palettes.catppuccin_mocha]
+# Modern pastel theme - soothing and elegant
+black = "#1e1e2e"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+purple = "#cba6f7"
+cyan = "#94e2d5"
+white = "#cdd6f4"
+bright-black = "#313244"
+bright-red = "#f38ba8"
+bright-green = "#a6e3a1"
+bright-yellow = "#f9e2af"
+bright-blue = "#89b4fa"
+bright-purple = "#cba6f7"
+bright-cyan = "#94e2d5"
+bright-white = "#f5e0dc"
+
+[palettes.tokyo_night]
+# Vibrant dark theme inspired by Tokyo at night
+black = "#1a1b26"
+red = "#f7768e"
+green = "#9ece6a"
+yellow = "#e0af68"
+blue = "#7aa2f7"
+purple = "#bb9af7"
+cyan = "#7dcfff"
+white = "#c0caf5"
+bright-black = "#414868"
+bright-red = "#f7768e"
+bright-green = "#9ece6a"
+bright-yellow = "#e0af68"
+bright-blue = "#7aa2f7"
+bright-purple = "#bb9af7"
+bright-cyan = "#7dcfff"
+bright-white = "#c0caf5"
+
+[palettes.gruvbox_dark]
+# Retro-inspired with warm tones
+black = "#282828"
+red = "#cc241d"
+green = "#98971a"
+yellow = "#d79921"
+blue = "#458588"
+purple = "#b16286"
+cyan = "#689d6a"
+white = "#a89984"
+bright-black = "#928374"
+bright-red = "#fb4934"
+bright-green = "#b8bb26"
+bright-yellow = "#fabd2f"
+bright-blue = "#83a598"
+bright-purple = "#d3869b"
+bright-cyan = "#8ec07c"
+bright-white = "#ebdbb2"
+
+[palettes.nord]
+# Arctic-inspired cold theme - clean and modern
+black = "#2e3440"
+red = "#bf616a"
+green = "#a3be8c"
+yellow = "#ebcb8b"
+blue = "#81a1c1"
+purple = "#b48ead"
+cyan = "#88c0d0"
+white = "#e5e9f0"
+bright-black = "#4c566a"
+bright-red = "#bf616a"
+bright-green = "#a3be8c"
+bright-yellow = "#ebcb8b"
+bright-blue = "#81a1c1"
+bright-purple = "#b48ead"
+bright-cyan = "#8fbcbb"
+bright-white = "#eceff4"
+
+[palettes.dracula]
+# Dark theme with vibrant, punchy colors
+black = "#282a36"
+red = "#ff5555"
+green = "#50fa7b"
+yellow = "#f1fa8c"
+blue = "#bd93f9"
+purple = "#ff79c6"
+cyan = "#8be9fd"
+white = "#f8f8f2"
+bright-black = "#6272a4"
+bright-red = "#ff6e6e"
+bright-green = "#69ff94"
+bright-yellow = "#ffffa5"
+bright-blue = "#d6acff"
+bright-purple = "#ff92df"
+bright-cyan = "#a4ffff"
+bright-white = "#ffffff"
