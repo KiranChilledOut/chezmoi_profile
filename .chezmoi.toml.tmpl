@@ -1,0 +1,14 @@
+# Chezmoi Configuration
+# This tells chezmoi where to place specific files
+
+[data]
+    # Detect OS
+    os = "{{ .chezmoi.os }}"
+
+# Windows-specific paths
+{{- if eq .chezmoi.os "windows" }}
+[edit]
+    command = "code"
+    args = ["--wait"]
+{{- end }}
+

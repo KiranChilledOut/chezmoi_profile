@@ -1,4 +1,4 @@
-# =============================================================================
+﻿# =============================================================================
 # Unified PowerShell Core Profile - Cross-Platform
 # =============================================================================
 # Requires: PowerShell 7+ for full cross-platform support
@@ -39,31 +39,47 @@ function Get-OSPlatform {
 if (Get-Module -ListAvailable -Name PSReadLine) {
     Import-Module PSReadLine
     
-    # Predictive IntelliSense (shows suggestions from history)
-    try {
-        Set-PSReadLineOption -PredictionSource HistoryAndPlugin
-        Set-PSReadLineOption -PredictionViewStyle ListView  # Dropdown list
-    }
-    catch {
-        Set-PSReadLineOption -PredictionSource History -ErrorAction SilentlyContinue
-        Set-PSReadLineOption -PredictionViewStyle ListView -ErrorAction SilentlyContinue
+    # Get PSReadLine version to determine available features
+    $psReadLineVersion = (Get-Module PSReadLine).Version
+    
+    # Predictive IntelliSense (requires PSReadLine 2.1.0+)
+    if ($psReadLineVersion -ge [Version]"2.1.0") {
+        try {
+            Set-PSReadLineOption -PredictionSource HistoryAndPlugin -ErrorAction SilentlyContinue
+            Set-PSReadLineOption -PredictionViewStyle ListView -ErrorAction SilentlyContinue
+        }
+        catch {
+            # Fallback to History only
+            Set-PSReadLineOption -PredictionSource History -ErrorAction SilentlyContinue
+        }
     }
     
-    # Better history search with arrow keys
-    Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-    Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+    # History search with arrow keys (works on all versions)
+    Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward -ErrorAction SilentlyContinue
+    Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward -ErrorAction SilentlyContinue
     
     # Ctrl+D to exit (Unix-like behavior)
-    Set-PSReadLineKeyHandler -Key Ctrl+d -Function DeleteCharOrExit
+    Set-PSReadLineKeyHandler -Key Ctrl+d -Function DeleteCharOrExit -ErrorAction SilentlyContinue
     
-    # Syntax highlighting colors
-    Set-PSReadLineOption -Colors @{
-        Command   = 'Yellow'
-        Parameter = 'Cyan'
-        String    = 'Green'
-        Operator  = 'Magenta'
-        Variable  = 'White'
-        Comment   = 'DarkGray'
+    # Syntax highlighting colors (works on all versions)
+    try {
+        Set-PSReadLineOption -Colors @{
+            Command   = 'Yellow'
+            Parameter = 'Cyan'
+            String    = 'Green'
+            Operator  = 'Magenta'
+            Variable  = 'White'
+            Comment   = 'DarkGray'
+        } -ErrorAction SilentlyContinue
+    }
+    catch {
+        # Older versions may not support all color options
+    }
+    
+    # Show version-specific message
+    if ($psReadLineVersion -lt [Version]"2.1.0") {
+        Write-Host "ℹ PSReadLine $psReadLineVersion detected. For best experience, upgrade to 2.1.0+" -ForegroundColor Yellow
+        Write-Host "  Run: Install-Module PSReadLine -Force -SkipPublisherCheck" -ForegroundColor Cyan
     }
 }
 
@@ -124,7 +140,8 @@ function touch {
     param($file)
     if (Test-Path $file) {
         (Get-Item $file).LastWriteTime = Get-Date
-    } else {
+    }
+    else {
         New-Item -ItemType File -Path $file | Out-Null
         Write-Host "✓ Created: $file" -ForegroundColor Green
     }
@@ -161,7 +178,8 @@ function sysinfo {
         try {
             $os = Get-CimInstance Win32_OperatingSystem
             Write-Host "Memory: $([math]::Round($os.FreePhysicalMemory/1MB, 2))GB free of $([math]::Round($os.TotalVisibleMemorySize/1MB, 2))GB" -ForegroundColor White
-        } catch {}
+        }
+        catch {}
     }
     Write-Host ""
 }
@@ -190,7 +208,12 @@ function weather {
 # -----------------------------------------------------------------------------
 
 if (Get-Module -ListAvailable -Name Terminal-Icons) {
-    Import-Module Terminal-Icons -ErrorAction SilentlyContinue
+    try {
+        Import-Module Terminal-Icons -ErrorAction SilentlyContinue
+    }
+    catch {
+        # Silently continue if it fails
+    }
 }
 
 # -----------------------------------------------------------------------------
@@ -212,8 +235,8 @@ $missingTools = @()
 if (-not (Command-Exists starship)) {
     $installCmd = switch ($platform) {
         "Windows" { "winget install Starship.Starship" }
-        "macOS"   { "brew install starship" }
-        "Linux"   { "curl -sS https://starship.rs/install.sh | sh" }
+        "macOS" { "brew install starship" }
+        "Linux" { "curl -sS https://starship.rs/install.sh | sh" }
     }
     $missingTools += "Starship: $installCmd"
 }
@@ -234,4 +257,25 @@ if ($missingTools.Count -gt 0) {
         Write-Host "  • $tool" -ForegroundColor Cyan
     }
     Write-Host ""
+}
+
+# Optional enhancements message (show once per session)
+if (-not $global:ProfileLoadedOnce) {
+    $global:ProfileLoadedOnce = $true
+    
+    $optionalTools = @()
+    if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
+        $optionalTools += "Terminal-Icons (beautiful file icons)"
+    }
+    if (-not (Get-Module -ListAvailable -Name z)) {
+        $optionalTools += "z (directory jumper)"
+    }
+    
+    if ($optionalTools.Count -gt 0) {
+        Write-Host "💡 Optional enhancements available:" -ForegroundColor Cyan
+        foreach ($tool in $optionalTools) {
+            Write-Host "   $tool" -ForegroundColor Gray
+        }
+        Write-Host "   See README.md for installation instructions`n" -ForegroundColor Gray
+    }
 }
