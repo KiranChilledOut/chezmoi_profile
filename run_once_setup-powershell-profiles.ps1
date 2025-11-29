@@ -110,7 +110,8 @@ if ($filesChanged) {
     Write-Host "    Please reload your profile to apply changes:" -ForegroundColor White
     Write-Host "    . `$PROFILE" -ForegroundColor Cyan
     Write-Host ""
-} else {
+}
+else {
     Write-Host "All files are up-to-date. No reload needed." -ForegroundColor Green
     Write-Host ""
 }

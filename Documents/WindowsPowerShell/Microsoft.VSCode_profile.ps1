@@ -210,6 +210,22 @@ function weather {
 if (Get-Module -ListAvailable -Name Terminal-Icons) {
     try {
         Import-Module Terminal-Icons -ErrorAction SilentlyContinue
+        
+        # Check if icons are likely to display properly
+        if ($env:WT_SESSION -or $env:TERM_PROGRAM) {
+            # In Windows Terminal or modern terminal
+            $fontWarning = $false
+        } else {
+            # Might be in older terminal
+            $fontWarning = $true
+        }
+        
+        # Show one-time font reminder
+        if (-not $global:TerminalIconsFontWarningShown -and $fontWarning) {
+            $global:TerminalIconsFontWarningShown = $true
+            Write-Host "💡 Terminal-Icons loaded! If you don't see icons:" -ForegroundColor Yellow
+            Write-Host "   Set terminal font to 'CaskaydiaCove Nerd Font'" -ForegroundColor Gray
+        }
     }
     catch {
         # Silently continue if it fails
@@ -276,7 +292,6 @@ if (-not $global:ProfileLoadedOnce) {
         foreach ($tool in $optionalTools) {
             Write-Host "   $tool" -ForegroundColor Gray
         }
-        Write-Host "   See README.md for installation instructions" -ForegroundColor Gray
-        Write-Host ""
+        Write-Host "   See README.md for installation instructions`n" -ForegroundColor Gray
     }
 }
