@@ -107,8 +107,10 @@ Write-Host "`n=== Sync Complete ===" -ForegroundColor Cyan
 if ($filesChanged) {
     Write-Host "`n⚠  Profile files were updated!" -ForegroundColor Yellow
     Write-Host "   Please reload your profile to apply changes:" -ForegroundColor White
-    Write-Host "   . `$PROFILE`n" -ForegroundColor Cyan
+    Write-Host "   . `$PROFILE" -ForegroundColor Cyan
+    Write-Host ""
 }
 else {
-    Write-Host "All files are up-to-date. No reload needed.`n" -ForegroundColor Green
+    Write-Host "All files are up-to-date. No reload needed." -ForegroundColor Green
+    Write-Host ""
 }
