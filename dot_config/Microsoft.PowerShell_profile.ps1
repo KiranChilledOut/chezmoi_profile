@@ -276,6 +276,7 @@ if (-not $global:ProfileLoadedOnce) {
         foreach ($tool in $optionalTools) {
             Write-Host "   $tool" -ForegroundColor Gray
         }
-        Write-Host "   See README.md for installation instructions`n" -ForegroundColor Gray
+        Write-Host "   See README.md for installation instructions" -ForegroundColor Gray
+        Write-Host ""
     }
 }
