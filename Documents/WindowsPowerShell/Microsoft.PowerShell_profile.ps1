@@ -37,7 +37,10 @@ function Get-OSPlatform {
 # -----------------------------------------------------------------------------
 
 if (Get-Module -ListAvailable -Name PSReadLine) {
-    Import-Module PSReadLine
+    # Import only if not already loaded
+    if (-not (Get-Module -Name PSReadLine)) {
+        Import-Module PSReadLine -ErrorAction SilentlyContinue
+    }
     
     # Get PSReadLine version to determine available features
     $psReadLineVersion = (Get-Module PSReadLine).Version
