@@ -126,3 +126,4 @@ chezmoi apply
 
 **This ensures your profiles are ALWAYS in the correct location, regardless of where chezmoi's target path is!** 🎯
 
+

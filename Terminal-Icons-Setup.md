@@ -255,3 +255,4 @@ Install-Module -Name Terminal-Icons -Scope CurrentUser -Force
 **Created:** For cross-platform PowerShell profile  
 **Compatible:** Windows, macOS, Linux with PowerShell 7+
 
+

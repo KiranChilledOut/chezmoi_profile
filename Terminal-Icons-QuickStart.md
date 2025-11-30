@@ -201,3 +201,4 @@ d----        30-11-2025     00:00                 Documents
 
 **That's it!** Terminal-Icons should now be working perfectly. Enjoy your beautiful terminal! 🎉
 
+

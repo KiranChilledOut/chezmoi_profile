@@ -188,3 +188,4 @@ Get-ChildItem -Path C:\Windows -Recurse -Filter *.log
 **Created:** $(Get-Date -Format 'yyyy-MM-dd')  
 **PSReadLine Version:** Check with `Get-Module PSReadLine`
 
+
